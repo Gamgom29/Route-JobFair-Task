@@ -1,0 +1,53 @@
+<section class="my-5 d-flex justify-content-center align-items-center flex-column">
+    <div class="d-flex justify-content-center align-items-center w-75 gap-4 mb-4">
+        <input (keyup)="applyFilter()" [(ngModel)]="filterObject.name" type="text" class="w-25 form-control" placeholder="Search By Name ...">
+        <input (keyup)="applyFilter()" [(ngModel)]="filterObject.amount" type="number" class="w-25 form-control" placeholder="Search By Amount ...">
+    </div>
+    <!-- 'CustomerId', 'Name', 'TransId', 'Date' , 'Amount' -->
+    <div class="mat-elevation-z8 container p-0">
+        <table mat-table [dataSource]="dataSource">
+        <!-- Position Column -->
+        <ng-container matColumnDef="CustomerId">
+            <th mat-header-cell *matHeaderCellDef> Customer Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.CustomerId}} </td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+        </ng-container>
+        <!-- Weight Column -->
+        <ng-container matColumnDef="TransId">
+            <th mat-header-cell *matHeaderCellDef> Transition Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.TransId}} </td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.Date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Amount">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell *matCellDef="let element"> {{element.Amount|currency}} </td>
+        </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                    showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
+</section>
+<div class="container p-0">
+    <mat-form-field class="w-25">
+        <mat-label>Select Customer</mat-label>
+        <mat-select class="" (selectionChange)="filterCustomersForCharts()" [(value)]="customerDetails">
+            @for (customer of customers; track $index) {
+            <mat-option [value]= "customer.id">{{customer.name}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <app-charts [customerData]="customerTransaction"></app-charts>
+</div>

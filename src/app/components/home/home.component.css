@@ -1,0 +1,16 @@
+table {
+    width: 100%;
+}
+
+:host ::ng-deep table thead {
+    background-color: #3f51b5 !important;
+    font-weight: bold;
+}
+
+input:hover , input:focus {
+    box-shadow: none;
+    border-color: #3f51b5;
+}
+input {
+    border: 1px solid #3f51b5;
+}
